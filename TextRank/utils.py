@@ -26,7 +26,7 @@ def sentence_segmentation(path, allow_speech_tags=allow_speech_tags):
 # 分句后去除停用词
 def filter_words(text, allow_speech_tags):
     # 读取停用词
-    with open('stopword.txt','r') as f:
+    with open('data/stopword.txt','r') as f:
         stopwords = [word.strip() for word in f.readlines()]
 
     processed_text = []

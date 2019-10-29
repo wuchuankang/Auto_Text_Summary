@@ -1,8 +1,7 @@
 import math
 import numpy as np
 import networkx as nx
-from utils import sentence_segmentation
-from bm25 import BM25
+from .bm25 import BM25
 
 class TextRank():
     def __init__(self, sentences, similarity_type='origin'):
@@ -86,12 +85,5 @@ class TextRank():
                 summaries += ''.join(sent)+'，'
 
         return summaries
-
-
-if __name__=='__main__':
-    text = sentence_segmentation('news.txt')
-    textrank = TextRank(text, similarity_type='origin')
-    summaries = textrank.get_key_sentences(3)
-    print(summaries)
 
 
