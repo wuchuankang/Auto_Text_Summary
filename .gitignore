@@ -1,3 +1,4 @@
-TextRank/__pycache__
-TextRank/news.txt
-
+Seq2Seq/seq2seq/__pycache__
+Seq2Seq/utils/__pycache__
+Seq2Seq/data/news_summries.csv
+Seq2Seq/data/sgns.sogou.char
