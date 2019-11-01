@@ -56,7 +56,7 @@ def training(encoder, decoder, dataset, vocab, lr, batch_size, num_epochs):
             enc_optimizer.step()
             dec_optimizer.step()
             l_sum += l.item()
-        if (epoch + 1) % 10 == 0:
+        if (epoch + 1) % 200 == 0:
             print("epoch %d, loss %.3f" % (epoch + 1, l_sum / len(data_iter)))
 
 
