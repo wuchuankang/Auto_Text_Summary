@@ -1,3 +1,4 @@
+import os
 import torch
 from torch import nn
 import torch.utils.data as Data
@@ -58,5 +59,16 @@ def training(encoder, decoder, dataset, vocab, lr, batch_size, num_epochs):
             l_sum += l.item()
         if (epoch + 1) % 10 == 0:
             print("epoch %d, loss %.3f" % (epoch + 1, l_sum / len(data_iter)))
+            # 因为要运行很久，所以每个epoch 保存一次模型
+            path = './directory/to/save/'
+            if not os.path.exists(path):
+                os.makedirs(path)
+            torch.save(encoder.state_dict(), path+'encoder.pth')
+            torch.save(decoder.state_dict(), path+'decoder.pth')
+            # 加载模型在main 函数中使用：
+            # encoder.load_state_dict(torch.load('./directory/to/save/encoder.pth'))
+            # decoder.load_state_dict(torch.load('./directory/to/save/decoder.pth'))
+
+
 
 

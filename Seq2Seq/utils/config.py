@@ -7,3 +7,4 @@ config = {'text_path': './data/news_summs_test.csv',
             'batch_size': 8,
             'lr': 0.005,
             'epochs': 100}
+
