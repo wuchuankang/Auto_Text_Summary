@@ -3,4 +3,4 @@ Seq2Seq/utils/__pycache__
 Seq2Seq/data/sgns.sogou.char
 Seq2Seq/data/selected_news_summaries.zip
 Seq2Seq/data/original_news_summaries.zip
-Seq2Seq/data/
+Seq2Seq/data/sgns.sogou.zip

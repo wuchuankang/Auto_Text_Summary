@@ -4,6 +4,8 @@ from utils import clean_text, config
 from utils import build_vocab, build_dataset, get_pretrained_embedding
 from seq2seq import EncoderRNN, DecoderRNN, training
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print('device:', device)
 # 清洗文本
 cleaned_news, cleaned_summaries = clean_text(config['text_path'], config['stopwords_path'])
 
@@ -17,7 +19,7 @@ summaries_dataset = build_dataset(vocab, cleaned_summaries, config['max_len_summ
 dataset = TensorDataset(news_dataset, summaries_dataset)
 
 # 加载预训练的word2vec模型（使用搜狗新闻训练得到的word2vec），维度是300
-pre_embeddings = get_pretrained_embedding(config['pretrained_vector_path'], vocab, vector_dim=300)
+pre_embeddings = get_pretrained_embedding(config['pretrained_vector_path'], vocab, vector_dim=300).to(device)
 
 # 构建模型，选择隐状态和词向量维度相同，都是300
 vocab_size = len(vocab)
@@ -25,6 +27,10 @@ vocab_size = len(vocab)
 encoder = EncoderRNN(vocab_size, 300, 300, n_layers=1, pre_embeddings=pre_embeddings)
 # decoder 使用双层单项gru
 decoder = DecoderRNN(vocab_size, 300, 300, n_layers=2, pre_embeddings=pre_embeddings)
+
+# 迁移到cuda上，training 要用
+encoder.to(device)
+decoder.to(device)
 
 # 训练模型
 training(encoder, decoder, dataset, vocab, config['lr'], config['batch_size'], config['epochs'])

@@ -19,11 +19,11 @@ def batch_loss(encoder, decoder, X, Y, vocab, loss):
     dec_state = decoder.get_init_hidden(enc_state)
     # 解码器在最初时间步的输入是BOS，注意迁移到 cuda上
     """
-    vocab要在这之前迁移到 cuda 上
+    dec_input要前迁移到 cuda 上
     """ 
-    dec_input = torch.tensor([vocab[BOS]] * batch_size)
+    dec_input = torch.tensor([vocab[BOS]] * batch_size).to(device)
     # 我们将使用掩码变量mask来忽略掉标签为填充项PAD的损失
-    mask, num_not_pad_tokens = torch.ones(batch_size,), 0
+    mask, num_not_pad_tokens = torch.ones(batch_size,).to(device), 0
     #迁移到cuda上
     l = torch.tensor([0.0]).to(device)
     for y in Y.permute(1,0): # Y shape: (batch, seq_len)
@@ -56,7 +56,7 @@ def training(encoder, decoder, dataset, vocab, lr, batch_size, num_epochs):
             enc_optimizer.step()
             dec_optimizer.step()
             l_sum += l.item()
-        if (epoch + 1) % 200 == 0:
+        if (epoch + 1) % 10 == 0:
             print("epoch %d, loss %.3f" % (epoch + 1, l_sum / len(data_iter)))
 
 
